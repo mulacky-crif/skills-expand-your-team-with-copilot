@@ -472,6 +472,29 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
+  // Function to create share URLs for an activity
+  function createShareUrls(activityName, activityDetails) {
+    // Get the current page URL as base
+    const baseUrl = window.location.origin + window.location.pathname;
+    
+    // Create a shareable message
+    const shareText = `Check out ${activityName} at Mergington High School! ${activityDetails.description}`;
+    const scheduleText = formatSchedule(activityDetails);
+    const fullShareText = `${shareText} Schedule: ${scheduleText}`;
+    
+    // Encode the text for URLs
+    const encodedText = encodeURIComponent(fullShareText);
+    const encodedUrl = encodeURIComponent(baseUrl);
+    const encodedTitle = encodeURIComponent(activityName);
+    
+    return {
+      twitter: `https://twitter.com/intent/tweet?text=${encodedText}&url=${encodedUrl}`,
+      facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}&quote=${encodedText}`,
+      whatsapp: `https://wa.me/?text=${encodedText}%20${encodedUrl}`,
+      email: `mailto:?subject=${encodedTitle}%20at%20Mergington%20High%20School&body=${encodedText}%20${encodedUrl}`
+    };
+  }
+
   // Function to render a single activity card
   function renderActivityCard(name, details) {
     const activityCard = document.createElement("div");
@@ -519,6 +542,32 @@ document.addEventListener("DOMContentLoaded", () => {
       </div>
     `;
 
+    // Create share buttons
+    const shareUrls = createShareUrls(name, details);
+    const shareButtons = `
+      <div class="share-container">
+        <span class="share-label">Share:</span>
+        <div class="share-buttons">
+          <a href="${shareUrls.twitter}" target="_blank" rel="noopener noreferrer" class="share-button twitter" title="Share on Twitter">
+            <span class="share-icon">🐦</span>
+            <span>Twitter</span>
+          </a>
+          <a href="${shareUrls.facebook}" target="_blank" rel="noopener noreferrer" class="share-button facebook" title="Share on Facebook">
+            <span class="share-icon">📘</span>
+            <span>Facebook</span>
+          </a>
+          <a href="${shareUrls.whatsapp}" target="_blank" rel="noopener noreferrer" class="share-button whatsapp" title="Share on WhatsApp">
+            <span class="share-icon">💬</span>
+            <span>WhatsApp</span>
+          </a>
+          <a href="${shareUrls.email}" class="share-button email" title="Share via Email">
+            <span class="share-icon">✉️</span>
+            <span>Email</span>
+          </a>
+        </div>
+      </div>
+    `;
+
     activityCard.innerHTML = `
       ${tagHtml}
       <h4>${name}</h4>
@@ -552,6 +601,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .join("")}
         </ul>
       </div>
+      ${shareButtons}
       <div class="activity-card-actions">
         ${
           currentUser
