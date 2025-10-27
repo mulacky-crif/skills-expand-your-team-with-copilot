@@ -32,6 +32,40 @@
   --info-light: #d1ecf1;
 }
 
+/* Dark mode color palette */
+body.dark-mode {
+  /* Primary colors */
+  --primary: #534bae;
+  --primary-light: #7c6fc0;
+  --primary-dark: #1a237e;
+  --primary-text: #ffffff;
+
+  /* Secondary colors */
+  --secondary: #ffa040;
+  --secondary-light: #ffb366;
+  --secondary-dark: #ff6f00;
+  --secondary-text: #000000;
+
+  /* Neutral colors */
+  --background: #1a1a1a;
+  --surface: #2d2d2d;
+  --text-primary: #e0e0e0;
+  --text-secondary: #b0b0b0;
+  --border: #404040;
+  --border-light: #353535;
+  --border-focus: #505050;
+
+  /* Feedback colors */
+  --success: #4caf50;
+  --success-light: #2d4a2f;
+  --warning: #ffa726;
+  --warning-light: #4a3f2d;
+  --error: #ef5350;
+  --error-light: #4a2d2d;
+  --info: #29b6f6;
+  --info-light: #2d3e4a;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -695,4 +729,52 @@ footer {
 
 #logout-button:hover {
   background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Dark mode toggle button */
+#dark-mode-toggle {
+  position: absolute;
+  top: 10px;
+  right: 100px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  color: var(--primary-text);
+  cursor: pointer;
+  transition: background-color 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+#dark-mode-toggle:hover {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+#dark-mode-toggle .toggle-icon {
+  font-size: 1rem;
+}
+
+/* Smooth transition for dark mode */
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.activity-card,
+.sidebar-filters,
+section,
+.modal-content {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Dark mode specific adjustments */
+body.dark-mode .activity-tag {
+  filter: brightness(0.8);
+}
+
+body.dark-mode .tooltip .tooltip-text {
+  background-color: rgba(245, 245, 245, 0.95);
+  color: #333;
 }
